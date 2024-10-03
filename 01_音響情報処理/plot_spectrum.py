@@ -14,7 +14,7 @@ import librosa
 SR = 16000
 
 # 音声ファイルの読み込み
-x, _ = librosa.load("aiueo_short.wav", sr=SR)
+x, _ = librosa.load("a.wav", sr=SR)
 
 # 高速フーリエ変換
 # np.fft. r f f t を使用するとF F T の前半部分のみが得られる
@@ -41,7 +41,7 @@ plt.plot(x_data, fft_log_abs_spec)  # 描画
 # 表示
 plt.show()
 # 画像ファイルに保存
-fig.savefig("plot-spectrum-whole-short.png")
+fig.savefig("plot-spectrum-whole.png")
 # 横軸を0˜2000 H z に拡大
 # x l i m で表示の領域を変えるだけ
 fig = plt.figure()
