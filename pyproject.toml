@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "exp4"
+version = "0.1.0"
+description = "All there is to run exp4 files"
+authors = ["Yeahjun Heo"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
