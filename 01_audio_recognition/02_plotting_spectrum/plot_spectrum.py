@@ -14,17 +14,17 @@ import librosa
 SR = 16000
 
 # 音声ファイルの読み込み 
-# x, _ = librosa.load("aiueo_long.wav", sr=SR)
+# x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR)
 # audio for a
-# x, _ = librosa.load("aiueo_long.wav", sr=SR, offset=1.2, duration=1.0)
+# x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR, offset=0.7, duration=0.7)
 # audio for i
-# x, _ = librosa.load("aiueo_long.wav", sr=SR, offset=2.4, duration=1.0)
+# x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR, offset=1.8, duration=0.7)
 # audio for u
-# x, _ = librosa.load("aiueo_long.wav", sr=SR, offset=3.6, duration=1.0)
+# x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR, offset=2.8, duration=0.7)
 # audio for e
-# x, _ = librosa.load("aiueo_long.wav", sr=SR, offset=4.7, duration=1.0)
+# x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR, offset=3.7, duration=0.7)
 # audio for o
-x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR, offset=5.8, duration=1.0)
+x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR, offset=4.6, duration=0.7)
 
 
 # 高速フーリエ変換
