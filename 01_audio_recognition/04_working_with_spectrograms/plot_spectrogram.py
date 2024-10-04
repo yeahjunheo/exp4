@@ -82,12 +82,13 @@ fig = plt.figure()
 
 # スペクトログラムを描画
 plt.xlabel("time [ms]")  # x軸のラベルを設定
+time_x = np.arange(0, len(x), size_shift) / SR  # 時間軸を設定
 plt.ylabel("frequency [Hz]")  # y軸のラベルを設定
 plt.imshow(
     np.flipud(np.array(spectrogram).T),  # 画像とみなすために，データを転置して上下反転
     extent=[
         0,
-        len(x),
+        time_x[-1],
         0,
         SR / 2,
     ],  # (横軸の原点の値，横軸の最大値，縦軸の原点の値，縦軸の最大値)
