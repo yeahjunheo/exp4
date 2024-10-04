@@ -43,7 +43,8 @@ for i in np.arange(0, len(x) - size_frame, size_shift):
     x_frame = x[idx: idx + size_frame]
     volume = 20 * np.log10(np.mean(x_frame**2))
 
-    # raise flag if volume is above threshold
+    # ============= Exercise 6 ===============#
+    # aise flag if volume is above threshold
     # as a check for speach in the audio file
     # print to console the time when flag is raised
     # and when the flag is lowered.
@@ -54,6 +55,7 @@ for i in np.arange(0, len(x) - size_frame, size_shift):
     elif volume < threshold and flag:
         print(f"Speach ended at: {time_in_seconds:.2f} seconds")
         flag = False
+    # ========================================#
 
     # フレームの音量を計算
     volume_db.append(volume)
