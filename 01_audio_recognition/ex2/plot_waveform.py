@@ -13,7 +13,7 @@ import librosa
 SR = 16000
 
 # 音 声 フ ァ イ ル の 読 み 込 み
-x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR)
+x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
 
 # x に 波 形 デ ー タ が 保 存 さ れ る
 # 第 二 戻 り 値 は サ ン プ リ ン グ レ ー ト （ こ こ で は 必 要 な い の で _ と し て い る ）

@@ -41,5 +41,5 @@ waveform = waveform * 0.9
 waveform = (waveform * 32768.0).astype("int16")
 
 # 音声ファイルとして出力する
-filename = "sinuoid_test.wav"
+filename = "sinusoid_test.wav"
 scipy.io.wavfile.write(filename, int(sampling_rate), waveform)

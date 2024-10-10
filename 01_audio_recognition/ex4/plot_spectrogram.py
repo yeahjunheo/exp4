@@ -14,14 +14,16 @@ import librosa
 SR = 16000
 
 # 音声ファイルの読み込み
-x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR)
+# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
+x, _ = librosa.load("../ex7/aiueo_long.wav", sr=SR)
+# x, _ = librosa.load("../ex7/aiueo_short.wav", sr=SR)
 
 #
 # 短時間フーリエ変換
 #
 
 # フレームサイズ
-size_frame = 512  # 2のべき乗
+size_frame = 5096  # 2のべき乗
 
 # フレームサイズに合わせてハミング窓を作成
 hamming_window = np.hamming(size_frame)
@@ -62,12 +64,12 @@ for i in np.arange(0, len(x) - size_frame, size_shift):
     fft_log_abs_spec = np.log(np.abs(fft_spec))
 
     # 低周波の部分のみを拡大したい場合
-    # 例えば、500Hzまでを拡大する
+    # 例えば、1000Hzまでを拡大する
     # また、最後のほうの画像描画処理において、
-    # 	extent=[0, len(x), 0, 500],
+    # 	extent=[0, len(x), 0, 1000],
     # にする必要があることに注意
-    # size_target = int(len(fft_log_abs_spec) * (500 / (SR/2)))
-    # fft_log_abs_spec = fft_log_abs_spec[:size_target]
+    size_target = int(len(fft_log_abs_spec) * (500 / (SR/2)))
+    fft_log_abs_spec = fft_log_abs_spec[:size_target]
 
     # 計算した対数振幅スペクトログラムを配列に保存
     spectrogram.append(fft_log_abs_spec)
@@ -90,15 +92,20 @@ plt.imshow(
         0,
         time_x[-1],
         0,
-        SR / 2,
+        500,
     ],  # (横軸の原点の値，横軸の最大値，縦軸の原点の値，縦軸の最大値)
     aspect="auto",
     interpolation="nearest",
 )
+plt.grid(True)  # Enable grid
+plt.minorticks_on()  # Enable minor ticks
+plt.grid(which='both', linestyle='--', linewidth=0.5)  # Customize grid lines
 plt.show()
 
 # 【補足】
 # 縦軸の最大値はサンプリング周波数の半分 = 16000 / 2 = 8000 Hz となる
 
 # 画像ファイルに保存
-fig.savefig("plot-spectogram.png")
+# fig.savefig("plot-spectogram.png")
+fig.savefig("../ex7/plot-spectogram-long.png")
+# fig.savefig("../ex7/plot-spectogram-short.png")

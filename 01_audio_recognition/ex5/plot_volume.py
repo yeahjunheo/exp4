@@ -7,8 +7,8 @@ SR = 16000
 size_frame = 512
 size_shift = 16000 / 100
 
-# x, _ = librosa.load("../01_recording_aiueo/aiueo_long.wav", sr=SR)
-x, _ = librosa.load("../01_recording_aiueo/aiueo_short.wav", sr=SR)
+# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
+x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR)
 
 volume_db = []
 
