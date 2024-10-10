@@ -13,7 +13,7 @@ import librosa
 # サンプリングレート
 SR = 16000
 
-# 音声ファイルの読み込み 
+# 音声ファイルの読み込み
 # x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
 # audio for a
 # x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=0.7, duration=0.7)

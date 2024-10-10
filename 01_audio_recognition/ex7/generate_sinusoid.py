@@ -5,7 +5,7 @@
 # 正弦波を生成し，音声ファイルとして出力する
 #
 
-import sys
+# import sys
 import math
 import numpy as np
 import scipy.io.wavfile
