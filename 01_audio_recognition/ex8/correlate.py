@@ -23,7 +23,7 @@ def is_peak(a, index):
 SR = 16000
 
 # フレームサイズ
-size_frame = 2**12  # 2のべき乗
+size_frame = 2**11  # 2のべき乗
 
 # シフトサイズ
 size_shift = 16000 / 100  # 0.01 秒 (10 msec)
@@ -46,17 +46,17 @@ omega = []
 # audio for o
 # x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=4.6, duration=0.7)
 # 音声ファイルの読み込み
-# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR)
+# x, _ = librosa.load("../ex1/aiueo_short2.wav", sr=SR)
 # audio for a
 # x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=0.8, duration=0.3)
 # audio for i
-# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=1.8, duration=0.3)
+x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=1.8, duration=0.3)
 # audio for u
 # x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=2.7, duration=0.3)
 # audio for e
 # x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=3.8, duration=0.3)
 # audio for o
-x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=4.8, duration=0.3)
+# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=4.8, duration=0.3)
 
 
 
@@ -91,7 +91,7 @@ time_axis = np.arange(0, len(omega) * size_shift / SR, size_shift / SR)
 plt.ylabel("omega [Hz]")
 plt.title(f'mean omega: {omega_avg:.2f} Hz')
 plt.plot(time_axis, omega)
-plt.ylim(0, 500)
+plt.ylim(0, 200)
 
 # Add grid lines for more precise measurement
 plt.grid(True, which='both', linestyle='--', linewidth=0.5)
@@ -102,4 +102,4 @@ plt.minorticks_on()
 plt.show()
 
 # save the plotted graph
-fig.savefig("correlate_short_o.png")
+fig.savefig("correlate_short_i.png")
