@@ -23,16 +23,18 @@ def is_peak(a, index):
 SR = 16000
 
 # フレームサイズ
-size_frame = 4096  # 2のべき乗
+size_frame = 2**12  # 2のべき乗
 
 # シフトサイズ
 size_shift = 16000 / 100  # 0.01 秒 (10 msec)
 
+hamming_window = np.hamming(size_frame)
+
 # スペクトログラムを保存するlist
-frequency = []
+omega = []
 
 # 音声ファイルの読み込み
-x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
+# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
 # audio for a
 # x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=0.7, duration=0.7)
 # audio for i
@@ -43,6 +45,19 @@ x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
 # x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=3.7, duration=0.7)
 # audio for o
 # x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=4.6, duration=0.7)
+# 音声ファイルの読み込み
+# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR)
+# audio for a
+# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=0.8, duration=0.3)
+# audio for i
+# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=1.8, duration=0.3)
+# audio for u
+# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=2.7, duration=0.3)
+# audio for e
+# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=3.8, duration=0.3)
+# audio for o
+x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=4.8, duration=0.3)
+
 
 
 # size_shift分ずらしながらsize_frame分のデータを取得
@@ -50,47 +65,41 @@ x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
 # 通常のrange関数と違うのは3つ目の引数で間隔を指定できるところ
 # (初期位置, 終了位置, 1ステップで進める間隔)
 for i in np.arange(0, len(x) - size_frame, size_shift):
-
-    # 該当フレームのデータを取得
-    idx = int(i)  # arangeのインデクスはfloatなのでintに変換
-    x_frame = x[idx : idx + size_frame]
-
-    # 自己相関が格納された，長さが len(x)*2-1 の対称な配列を得る
+    idx = int(i) 
+    x_frame = x[idx : idx + size_frame] * hamming_window
+    
     autocorr = np.correlate(x_frame, x_frame, "full")
-
-    # 不要な前半を捨てる
+    
     autocorr = autocorr[len(autocorr) // 2 :]
 
-    # ピークのインデックスを抽出する
     peakindices = [i for i in range(len(autocorr)) if is_peak(autocorr, i)]
 
-    # インデックス0 がピークに含まれていれば捨てる
     peakindices = [i for i in peakindices if i != 0]
 
     # インデックスに対応する周波数を得る
-    # （自分で実装すること）
-    if peakindices != []:
+    if len(peakindices) > 0:
         max_peak_index = max(peakindices, key=lambda index: autocorr[index])
-        # インデックスに対応する周波数を得る
-        # （自分で実装すること）
         tau = max_peak_index / SR
-        frequency.append(1 / tau)
+        omega.append(1 / tau)
 
+omega_avg = np.mean(omega)
 
-# 画像として保存するための設定
 fig = plt.figure()
 
+plt.xlabel("time [s]")
+time_axis = np.arange(0, len(omega) * size_shift / SR, size_shift / SR)
+plt.ylabel("omega [Hz]")
+plt.title(f'mean omega: {omega_avg:.2f} Hz')
+plt.plot(time_axis, omega)
+plt.ylim(0, 500)
 
-# plot volume graph
-time = np.arange(0, len(x)) * size_shift / SR
-plt.plot(np.linspace(0,(len(x)-size_frame)/16000, len(frequency)), frequency)
-plt.xlabel("Time (seconds)")
-plt.ylabel("frequency (Hz)")
+# Add grid lines for more precise measurement
+plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+# Add minor ticks for more precise measurement
+plt.minorticks_on()
 
 plt.show()
 
-# 【補足】
-# 縦軸の最大値はサンプリング周波数の半分 = 16000 / 2 = 8000 Hz となる
-
-# 画像ファイルに保存
-fig.savefig("plot-correlate-long.png")
+# save the plotted graph
+fig.savefig("correlate_short_o.png")
