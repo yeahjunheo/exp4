@@ -7,7 +7,6 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import numpy as np
 import librosa
 
 # スペクトルを受け取り，ケプストラムを返す関数
@@ -18,49 +17,33 @@ def cepstrum(amplitude_spectrum):
 
 SR = 16000
 
-x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
-# x, _ = librosa.load("../ex1/aiueo_short.wacv", sr=SR)
-# 音声ファイルの読み込み
-# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
-# audio for a
-# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=0.7, duration=0.7)
-# audio for i
-# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=1.8, duration=0.7)
-# audio for u
-# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=2.8, duration=0.7)
-# audio for e
-# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=3.7, duration=0.7)
-# audio for o
-# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=4.6, duration=0.7)
-# 音声ファイルの読み込み
-# x, _ = librosa.load("../ex1/aiueo_short2.wav", sr=SR)
-# audio for a
-# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=0.8, duration=0.3)
-# audio for i
-# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=1.8, duration=0.3)
-# audio for u
-# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=2.7, duration=0.3)
-# audio for e
-# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=3.8, duration=0.3)
-# audio for o
-# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=4.8, duration=0.3)
+# audio for long_a
+audio_files = [
+	("long_a", "../ex1/aiueo_long.wav", 0.7, 0.7),
+	("long_i", "../ex1/aiueo_long.wav", 1.8, 0.7),
+	("long_u", "../ex1/aiueo_long.wav", 2.8, 0.7),
+	("long_e", "../ex1/aiueo_long.wav", 3.7, 0.7),
+	("long_o", "../ex1/aiueo_long.wav", 4.6, 0.7),
+	("short_a", "../ex1/aiueo_short.wav", 0.8, 0.3),
+	("short_i", "../ex1/aiueo_short.wav", 1.8, 0.3),
+	("short_u", "../ex1/aiueo_short.wav", 2.7, 0.3),
+	("short_e", "../ex1/aiueo_short.wav", 3.8, 0.3),
+	("short_o", "../ex1/aiueo_short.wav", 4.8, 0.3),
+]
 
-amplitude_spectrum = np.fft.rfft(x)
-
-fft_log_abs_spec = np.log(np.abs(amplitude_spectrum))
-
-cepstrum = cepstrum(np.abs(amplitude_spectrum))
-
-cepstrum[13:-13] = 0
-
-spectrum_envelope = np.fft.ifft(cepstrum)
-
-fig = plt.figure()
-plt.xlabel('frequency [Hz]')
-plt.ylabel('amplitude')
-plt.plot(fft_log_abs_spec)
-plt.plot(spectrum_envelope)
-plt.show()
-
-fig.savefig("cepstrum_long.png")
-# fig.savefig("cepstrum_short.png")
+for name, file, offset, duration in audio_files:
+	x, _ = librosa.load(file, sr=SR, offset=offset, duration=duration)
+	amplitude_spectrum = np.fft.rfft(x)
+	fft_log_abs_spec = np.log(np.abs(amplitude_spectrum))
+	cepstrum_data = cepstrum(np.abs(amplitude_spectrum))
+	cepstrum_data[13:-13] = 0
+	spectrum_envelope = np.fft.ifft(cepstrum_data)
+	
+	fig = plt.figure()
+	plt.xlabel('frequency [Hz]')
+	plt.ylabel('amplitude')
+	plt.plot(fft_log_abs_spec)
+	plt.plot(spectrum_envelope)
+	plt.show()
+	
+	fig.savefig(f"cepstrum_{name}.png")
