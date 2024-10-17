@@ -65,8 +65,8 @@ for frame in test_ceps:
     for i in range(len(training_audio)):
         likelihoods.append(gaussian_likelihood(frame, mean_ceps[i], var_ceps[i]))
         
-    max_log_likelihood = -1000000000000
-    result = -1
+    max_log_likelihood = -1e12
+    result = 0
     for i in range(len(likelihoods)):
         if likelihoods[i] > max_log_likelihood:
             max_log_likelihood = likelihoods[i]
