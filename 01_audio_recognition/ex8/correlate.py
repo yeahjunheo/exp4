@@ -34,7 +34,7 @@ hamming_window = np.hamming(size_frame)
 omega = []
 
 # 音声ファイルの読み込み
-# x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
+x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR)
 # audio for a
 # x, _ = librosa.load("../ex1/aiueo_long.wav", sr=SR, offset=0.7, duration=0.7)
 # audio for i
@@ -48,7 +48,7 @@ omega = []
 # 音声ファイルの読み込み
 # x, _ = librosa.load("../ex1/aiueo_short2.wav", sr=SR)
 # audio for a
-x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=0.8, duration=0.3)
+# x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=0.8, duration=0.3)
 # audio for i
 # x, _ = librosa.load("../ex1/aiueo_short.wav", sr=SR, offset=1.8, duration=0.3)
 # audio for u
@@ -102,4 +102,4 @@ plt.minorticks_on()
 plt.show()
 
 # save the plotted graph
-fig.savefig("correlate_short_i.png")
+fig.savefig("correlate_long.png")
