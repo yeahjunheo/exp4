@@ -22,7 +22,7 @@ def is_peak(a, index):
     return a[index - 1] < a[index] and a[index] > a[index + 1]
 
 
-audio_file = "asatakama.wav"
+audio_file = "../ex1/aiueo_short.wav"
 x, _ = librosa.load(audio_file, sr=SR)
 
 # fundamental frequency and zero-crossing rate operation
@@ -92,4 +92,4 @@ ax.grid(True)
 
 plt.show()
 
-fig.savefig("zero_cross.png")
+# fig.savefig("zero_cross.png")
