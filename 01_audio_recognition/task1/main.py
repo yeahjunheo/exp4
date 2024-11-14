@@ -76,7 +76,6 @@ spectrogram = []
 f0_values = []
 zcr_values = []
 volume_db = []
-chromagram = []
 chords = []
 
 for i in np.arange(0, len(x) - size_frame, size_shift):
@@ -97,7 +96,6 @@ for i in np.arange(0, len(x) - size_frame, size_shift):
     # chromagram
     frequencies = np.linspace((SR / 2) / len(fft_spec), SR / 2, len(fft_spec))
     chroma = chroma_vector(fft_spec, frequencies)
-    chromagram.append(chroma)
 
     # chord estimation
     chroma = np.append(chroma, chroma)
@@ -188,29 +186,15 @@ show_volume_checkbox.grid(row=2, column=0, sticky="w", padx=10, pady=5)
 modify_frame = ttk.Frame(frame2)
 modify_frame.grid(row=1, column=0)
 
-x_axis_min = tk.DoubleVar()
-x_axis_min.set(0)
-x_axis_max = tk.DoubleVar()
-x_axis_max.set(duration)
+x_axis_min, x_axis_max = tk.DoubleVar(value=0), tk.DoubleVar(value=duration)
+y_axis_min, y_axis_max = tk.DoubleVar(value=0), tk.DoubleVar(value=8000)
 
-y_axis_min = tk.DoubleVar()
-y_axis_min.set(0)
-y_axis_max = tk.DoubleVar()
-y_axis_max.set(8000)
-
-x_axis_label = ttk.Label(modify_frame, text="X-axis range")
-x_axis_label.grid(row=0, column=0, columnspan=2, pady=5)
-x_axis_min_entry = ttk.Entry(modify_frame, textvariable=x_axis_min, width=10)
-x_axis_min_entry.grid(row=1, column=0, padx=5, pady=5)
-x_axis_max_entry = ttk.Entry(modify_frame, textvariable=x_axis_max, width=10)
-x_axis_max_entry.grid(row=1, column=1, padx=5, pady=5)
-
-y_axis_label = ttk.Label(modify_frame, text="Y-axis range")
-y_axis_label.grid(row=2, column=0, columnspan=2, pady=5)
-y_axis_min_entry = ttk.Entry(modify_frame, textvariable=y_axis_min, width=10)
-y_axis_min_entry.grid(row=3, column=0, padx=5, pady=5)
-y_axis_max_entry = ttk.Entry(modify_frame, textvariable=y_axis_max, width=10)
-y_axis_max_entry.grid(row=3, column=1, padx=5, pady=5)
+for i, (label, var_min, var_max) in enumerate(
+    [("X-axis range", x_axis_min, x_axis_max), ("Y-axis range", y_axis_min, y_axis_max)]
+):
+    ttk.Label(modify_frame, text=label).grid(row=2*i, column=0, columnspan=2, pady=5)
+    ttk.Entry(modify_frame, textvariable=var_min, width=10).grid(row=2*i+1, column=0, padx=5, pady=5)
+    ttk.Entry(modify_frame, textvariable=var_max, width=10).grid(row=2*i+1, column=1, padx=5, pady=5)
 
 confirm_button = ttk.Button(modify_frame, text="Confirm")
 confirm_button.grid(row=4, column=0, columnspan=2, pady=5)

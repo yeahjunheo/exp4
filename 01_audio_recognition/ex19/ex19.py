@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import scipy.io.wavfile
 
 SR = 16000
-size_frame = 512
+size_frame = 2048
 size_shift = 16000 / 100
 
 x, _ = librosa.load("../ex15/shs-test.wav", sr=SR)
@@ -87,7 +87,7 @@ for i, (D, R) in enumerate(test_params):
         y_frame = y[idx : idx + size_frame]
         volume = 20 * np.log10(np.mean(y_frame**2))
         volume_db.append(volume)
-    
+
     print(volume_db)
 
     row = i // 5
