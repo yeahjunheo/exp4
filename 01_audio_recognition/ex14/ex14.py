@@ -34,7 +34,9 @@ def chroma_vector(spectrum, frequencies):
     return cv
 
 
-x, _ = librosa.load("easy_chords.wav", sr=SR)
+# x, _ = librosa.load("easy_chords.wav", sr=SR)
+x, _ = librosa.load("../task3/songs/twinkle-twinkle-little-star-short.mp3", sr=SR)
+
 
 spectrogram = []
 chromagram = []

@@ -636,46 +636,9 @@ def update_volume_db():
 
 fig4, ax4 = plt.figure(figsize=(8, 6), dpi=75), plt.gca()
 canvas4 = FigureCanvasTkAgg(fig4, master=tab4)
-canvas4.get_tk_widget().pack(
-    side="left"
-)  # "top"は上部方向にウィジェットを積むことを意味する
+canvas4.get_tk_widget().pack(side="left")
 ax4.set_xlabel("sec")
 ax4.set_ylabel("volume [dB]")
-
-
-def play_animation():
-    fig4.clear()
-    ax4.set_xlabel("sec")
-    ax4.set_ylabel("volume [dB]")
-    t = np.arange(0, len(volume_db)) * SIZE_SHIFT / SR
-    t_tremolo = np.arange(0, len(volume_db_tremolo)) * SIZE_SHIFT / SR
-
-    (line1,) = ax4.plot(t, volume_db, label="Original Volume", color="r")
-    (line2,) = ax4.plot(t_tremolo, volume_db_tremolo, label="Tremolo Volume", color="b")
-    ax4.set(
-        xlim=[0, duration],
-        ylim=[
-            min(min(volume_db), min(volume_db_tremolo)),
-            max(max(volume_db), max(volume_db_tremolo)),
-        ],
-        xlabel="Time [s]",
-        ylabel="Volume [dB]",
-    )
-    ax.legend()
-
-    def update(frame):
-        line1.set_data(t[:frame], volume_db[:frame])
-        line2.set_data(t_tremolo[:frame], volume_db_tremolo[:frame])
-        return line1, line2
-
-    ani = FuncAnimation(fig4, update, frames=len(t), interval=(duration * 1000) / len(t), blit=True)
-    canvas4.draw()
-
-
-# play animation
-play_animation_button = tk.Button(tab4, text="Play Audio")
-play_animation_button.config(command=play_animation)
-play_animation_button.pack(side="top")
 
 # execute the GUI
 root.mainloop()

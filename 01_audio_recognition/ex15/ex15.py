@@ -21,7 +21,8 @@ def is_peak(a, index):
 
 
 # x, _ = librosa.load("shs-test-midi.wav", sr=SR)
-x, _ = librosa.load("shs-test.wav", sr=SR)
+# x, _ = librosa.load("shs-test.wav", sr=SR)
+x, _ = librosa.load("../task3/songs/twinkle-twinkle-little-star-short.mp3", sr=SR)
 
 spectrogram = []
 omega = []

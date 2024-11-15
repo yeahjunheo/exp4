@@ -27,15 +27,13 @@ def shs(spectrum, freqs, candidate_freqs, num_harmonics=5):
 
 
 # x, _ = librosa.load("shs-test-midi.wav", sr=SR)
-x, _ = librosa.load("takyon-pop.mp3", sr=SR, duration=10)
+x, _ = librosa.load("../task3/songs/twinkle-twinkle-little-star-short.mp3", sr=SR)
 
 spectrogram = []
 shs_freq = []
 
 freqs = np.linspace(0, SR / 2, size_frame // 2 + 1)
 candidate_freqs = np.linspace(50, 400, 500)
-print(freqs)
-print(candidate_freqs)
 
 for i in range(0, len(x) - size_frame, size_shift):
     idx = int(i)
@@ -49,6 +47,8 @@ for i in range(0, len(x) - size_frame, size_shift):
     # shs
     estimated_f0 = shs(np.abs(fft_spec), freqs, candidate_freqs)
     shs_freq.append(estimated_f0)
+
+print(shs_freq)
 
 
 # Show waveform

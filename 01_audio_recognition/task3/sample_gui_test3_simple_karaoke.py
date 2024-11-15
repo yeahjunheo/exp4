@@ -79,10 +79,10 @@ is_gui_running = False
 # ここでは最新のスペクトログラムと音量のデータを格納する
 # 再描画はmatplotlib animationが行う
 def animate(frame_index):
-    ax1_sub.set_array(spectrogram_data)
+    # ax1_sub.set_array(spectrogram_data)
 
     # この上の処理を下記のようにすれば楽曲のスペクトログラムが表示される
-    # ax1_sub.set_array(spectrogram_data_music)
+    ax1_sub.set_array(spectrogram_data_music)
 
     ax2_sub.set_data(time_x_data, volume_data)
 
