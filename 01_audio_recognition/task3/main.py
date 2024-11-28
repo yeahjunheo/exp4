@@ -114,63 +114,6 @@ def _quit():
     root.destroy()
 
 
-# GUI pop-up to select the audio file
-# this starts when the GUI is started
-def select_song():
-    select_song_popup = tkinter.Toplevel()
-    select_song_popup.wm_title("Select song")
-    # select_song_popup.geometry("600x300")
-
-    select_song_label = tkinter.Label(
-        select_song_popup, text="Select a song to play", font=("", 30)
-    )
-    select_song_label.pack(side="top")
-
-    # display song list
-    select_song_list = tkinter.Listbox(
-        select_song_popup, font=("", 30), selectmode="single"
-    )
-    select_song_list.config(width=0, height=0)
-
-    song_folder = "./songs/"
-    songs = os.listdir(song_folder)
-    for idx, song in enumerate(songs):
-        if song.endswith(".mp3"):
-            select_song_list.insert(idx + 1, song)
-
-    select_song_list.pack(side="top", fill="both")
-
-    # Button frame to either play or quit karaoke
-    select_song_btn = tkinter.Frame(select_song_popup)
-    select_song_btn.pack(side="top")
-
-    def play_selected_song():
-        selected_song = select_song_list.get(select_song_list.curselection())
-
-        # Set the global filename variable to the selected song
-        global filename, is_select_song, is_gui_running
-        filename = f"{song_folder}{selected_song}"
-
-        is_select_song = False
-        is_gui_running = True
-        select_song_popup.destroy()
-
-    play_song_btn = tkinter.Button(
-        select_song_btn, text="Play", command=play_selected_song, font=("", 30)
-    )
-    play_song_btn.pack(side="left")
-
-    # button to close karaoke
-    end_karaoke_btn = tkinter.Button(
-        select_song_btn, text="Quit", command=_quit, font=("", 30)
-    )
-    end_karaoke_btn.pack(side="left")
-
-    # focus on the pop-up window
-    select_song_popup.focus()
-    select_song_popup.grab_set()
-
-
 display_frame = tkinter.Frame(root)
 display_frame.pack(side="left", fill="both", expand=True)
 
@@ -293,51 +236,9 @@ lyrics_top.pack(side="top")
 lyrics_bottom = tkinter.Label(lyrics_frame, text="", font=("", 20), fg="gray")
 lyrics_bottom.pack(side="bottom")
 
-# remote for the karaoke
-remote_controller_frame = tkinter.Frame(master=remote_frame, padx=10, pady=10)
-remote_controller_frame.pack(side="top", fill="both")
-
-# # set pitch of the song
-remote_pitch_frame = tkinter.Frame(
-    master=remote_controller_frame, highlightbackground="gray", highlightthickness=5
-)
-# remote_pitch_frame.pack(side="left", fill="both", padx=10, pady=10)
-
-pitch_label = tkinter.Label(remote_pitch_frame, text="Pitch", font=("", 30), width=5)
-pitch_label.pack(side="top")
-
-pitch_up_btn = tkinter.Button(remote_pitch_frame, text="+1", font=("", 30), width=3)
-pitch_up_btn.pack(side="top")
-
-pitch_value = tkinter.StringVar()
-pitch_value.set("0")
-pitch_label = tkinter.Label(remote_pitch_frame, textvariable=pitch_value, font=("", 30))
-pitch_label.pack(side="top")
-
-pitch_down_btn = tkinter.Button(remote_pitch_frame, text="-1", font=("", 30), width=3)
-pitch_down_btn.pack(side="top")
-
-
-def increase_pitch():
-    global music_pitch
-    if music_pitch < 12:
-        music_pitch += 1
-        pitch_value.set(str(music_pitch))
-
-
-def decrease_pitch():
-    global music_pitch
-    if music_pitch > -12:
-        music_pitch -= 1
-        pitch_value.set(str(music_pitch))
-
-
-pitch_up_btn.config(command=increase_pitch)
-pitch_down_btn.config(command=decrease_pitch)
-
 # set tempo of the song
 remote_tempo_frame = tkinter.Frame(
-    master=remote_controller_frame, highlightbackground="gray", highlightthickness=5
+    master=remote_frame, highlightbackground="gray", highlightthickness=5
 )
 remote_tempo_frame.pack(side="left", fill="both", padx=10, pady=10)
 
